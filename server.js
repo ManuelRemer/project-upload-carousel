@@ -16,6 +16,10 @@ const rateLimiter = require("express-rate-limit");
 // npm other packages
 const { StatusCodes } = require("http-status-codes");
 
+// custom stuff
+const notFound = require("./middleware/not-found-MW");
+const errorHandler = require("./middleware/error-handler-MW");
+
 app.get("/api/v1", (req, res) => {
   res.send("Hallo from the backend");
 });
@@ -29,7 +33,9 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-// app.use(errorHandlerMiddleware);
+// error handling middleware
+app.use(notFound);
+app.use(errorHandler);
 
 const port = process.env.PORT || 4000;
 
