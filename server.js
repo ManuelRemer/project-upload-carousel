@@ -14,11 +14,21 @@ const xss = require("xss-clean");
 const rateLimiter = require("express-rate-limit");
 
 // npm other packages
-const { StatusCodes } = require("http-status-codes");
+const fileUpload = require("express-fileupload");
+const cloudinary = require("cloudinary").v2;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
 
 // custom stuff
 const notFound = require("./middleware/not-found-MW");
 const errorHandler = require("./middleware/error-handler-MW");
+
+app.use(express.json());
+app.use(fileUpload({ useTempFiles: true }));
 
 app.get("/api/v1", (req, res) => {
   res.send("Hallo from the backend");
