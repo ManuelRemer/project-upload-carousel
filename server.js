@@ -27,6 +27,7 @@ cloudinary.config({
 const notFound = require("./middleware/not-found-MW");
 const errorHandler = require("./middleware/error-handler-MW");
 const imagesRouter = require("./routes/imagesRouter");
+const adminRouter = require("./routes/adminRouter");
 
 app.use(express.json());
 app.use(fileUpload({ useTempFiles: true }));
@@ -36,6 +37,7 @@ app.get("/api/v1", (req, res) => {
 });
 
 app.use("/api/v1/images", imagesRouter);
+app.use("/api/v1/admin", adminRouter);
 
 if (process.env.NODE_ENV === "production") {
   // Serve any static file
