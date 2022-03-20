@@ -13,4 +13,9 @@ const uploadImage = async (req, res) => {
   res.send("uploadImage");
 };
 
-module.exports = { createImage, getImages, uploadImage };
+const deleteImage = async (req, res) => {
+  const ImageToDelete = await Image.findOne(req.body.name);
+  res.send({ ImageToDelete });
+};
+
+module.exports = { createImage, getImages, uploadImage, deleteImage };

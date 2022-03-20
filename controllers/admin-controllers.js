@@ -10,4 +10,9 @@ const loginAdmin = async (req, res) => {
   res.send({ admin });
 };
 
-module.exports = { createAdmin, loginAdmin };
+const deleteAdmin = async (req, res) => {
+  const admin = await Admin.findOne(req.body.name);
+  res.send({ admin });
+};
+
+module.exports = { createAdmin, loginAdmin, deleteAdmin };

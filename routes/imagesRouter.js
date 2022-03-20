@@ -6,9 +6,10 @@ const {
   createImage,
   getImages,
   uploadImage,
+  deleteImage,
 } = require("../controllers/images-controller");
 
-router.route("/").post(createImage).get(getImages);
+router.route("/").post(createImage).get(getImages).delete(deleteImage);
 router.route("/upload").post(uploadImage);
 
 module.exports = router;
