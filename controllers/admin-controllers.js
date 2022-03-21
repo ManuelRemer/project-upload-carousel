@@ -3,12 +3,14 @@ const { StatusCodes } = require("http-status-codes");
 // custom stuff
 const Admin = require("../models/Admin");
 
-const alreadyAdmin = async () => {
-  let result = await Admin.find({});
-  return result;
+const checkIfAdmin = async (req, res, next) => {
+  const admin = await Admin.find({});
+  if (admin.length === 0) {
+    next();
+  } else {
+    res.status(StatusCodes.BAD_REQUEST).json({ msg: "no more admins" });
+  }
 };
-
-console.log(alreadyAdmin());
 
 const createAdmin = async (req, res) => {
   const admin = await Admin.create(req.body);
@@ -26,4 +28,4 @@ const deleteAdmin = async (req, res) => {
   res.send({ admin });
 };
 
-module.exports = { createAdmin, loginAdmin, deleteAdmin };
+module.exports = { checkIfAdmin, createAdmin, deleteAdmin, loginAdmin };
