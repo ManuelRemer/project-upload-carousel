@@ -6,9 +6,13 @@ const {
   createAdmin,
   deleteAdmin,
   loginAdmin,
+  validateEmailPassword,
 } = require("../controllers/admin-controllers");
 
 router.route("/create").post(checkIfAdmin, createAdmin);
-router.route("/").post(loginAdmin).delete(deleteAdmin);
+router
+  .route("/")
+  .post(validateEmailPassword, loginAdmin)
+  .delete(validateEmailPassword, deleteAdmin);
 
 module.exports = router;
