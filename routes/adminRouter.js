@@ -1,6 +1,8 @@
 const express = require("express");
-
 const router = express.Router();
+
+const authenticateWithJWT = require("../middleware/authentication-MW");
+
 const {
   checkIfAdmin,
   createAdmin,
@@ -13,6 +15,6 @@ router.route("/create").post(checkIfAdmin, createAdmin);
 router
   .route("/")
   .post(validateEmailPassword, loginAdmin)
-  .delete(validateEmailPassword, deleteAdmin);
+  .delete(authenticateWithJWT, validateEmailPassword, deleteAdmin);
 
 module.exports = router;
