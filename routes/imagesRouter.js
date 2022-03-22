@@ -5,11 +5,16 @@ const router = express.Router();
 const {
   createImage,
   getImages,
-  uploadImageToCloud,
   deleteImage,
+  uploadImageToCloud,
+  deleteImageFromCloud,
 } = require("../controllers/images-controller");
 
-router.route("/").post(createImage).get(getImages).delete(deleteImage);
+router
+  .route("/")
+  .post(createImage)
+  .get(getImages)
+  .delete(deleteImage, deleteImageFromCloud);
 router.route("/upload").post(uploadImageToCloud);
 
 module.exports = router;
