@@ -38,6 +38,7 @@ const deleteImage = async (req, res, next) => {
     throw new BadRequestError(`No image with id: ${req.body.id}`);
   }
   next();
+  // test
 };
 
 const deleteImageFromCloud = async (req, res) => {
