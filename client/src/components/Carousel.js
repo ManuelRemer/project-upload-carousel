@@ -112,7 +112,6 @@ export const CarouselItem = ({ children, itemsShown }) => {
       className="carousel__item"
       style={{
         width: `${100 / parseInt(itemsShown)}%`,
-        backgroundColor: `${children}`,
       }}
     >
       {children}
