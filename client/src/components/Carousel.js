@@ -1,65 +1,26 @@
-import { useEffect, useState, useRef, cloneElement } from "react";
-
+import { useEffect, useState, useRef, cloneElement, useContext } from "react";
+import { useCreateStrip } from "../hooks/useCreateStrip";
 // styles
 import "./Carousel.css";
 
-const Carousel = ({ children, itemsShown = 1 }) => {
-  const [activeIndex, setActiveIndex] = useState(itemsShown);
-  const [transform, setTransform] = useState(true);
-  const [buttonsDisabled, setButtonsDisabled] = useState(false);
+//context
 
-  const prevItems = (itemsShown, children) => {
-    let result = [];
-    for (let i = 1; i <= itemsShown; i++) {
-      result = [children[children.length - i], ...result];
-    }
-    return result;
-  };
-  const nextItems = (itemsShown, children) => {
-    let result = [];
-    for (let i = itemsShown; i > 0; i--) {
-      result = [...result, children[i - 1]];
-    }
-    return result.reverse();
-  };
+import { useCarousel } from "../hooks/useCarousel";
+import { useCarouselContext } from "../hooks/useCarouselContext";
 
-  const itemsStrip = useRef([
-    ...prevItems(itemsShown, children),
-    ...children,
-    ...nextItems(itemsShown, children),
-  ]);
+const Carousel = ({ children, itemsShown = 1, dumb = false }) => {
+  const carouselStrip = useCreateStrip(1, children);
+  const { navColor } = useCarouselContext();
 
-  // updater
-  const updateIndex = (newIndex) => {
-    setTransform(true);
-    setActiveIndex(newIndex);
-    setButtonsDisabled(true);
-  };
+  const {
+    transform,
+    buttonsDisabled,
+    handleTransitionEnd,
+    activeIndex,
+    updateIndex,
+  } = useCarousel(1, carouselStrip);
+  // const {activeIndex, updateIndex } = useCarouselContext();
 
-  // handler
-  const handleTransitionEnd = () => {
-    setButtonsDisabled(false);
-    if (
-      activeIndex === itemsStrip.current.length - itemsShown ||
-      activeIndex === 0
-    ) {
-      setTransform(false);
-    }
-  };
-
-  // effects
-  useEffect(() => {
-    if (!transform && activeIndex === itemsStrip.current.length - itemsShown) {
-      setActiveIndex(itemsShown);
-      setButtonsDisabled(false);
-      return;
-    }
-    if (!transform && activeIndex === 0) {
-      setActiveIndex(itemsStrip.current.length - itemsShown * 2);
-    }
-  }, [transform, activeIndex, itemsShown, itemsStrip]);
-
-  //return
   return (
     <div className="carousel">
       <div
@@ -77,29 +38,36 @@ const Carousel = ({ children, itemsShown = 1 }) => {
               }
         }
       >
-        {itemsStrip.current.map((child) => {
-          return cloneElement(child, { itemsShown, key: Math.random() });
+        {carouselStrip.current.map((child) => {
+          return cloneElement(child, {
+            itemsShown,
+            key: Math.random(),
+          });
         })}
       </div>
 
-      <div className="carousel__navigation">
-        <button
-          onClick={() => {
-            updateIndex(activeIndex - 1);
-          }}
-          disabled={!buttonsDisabled ? false : true}
-        >
-          prev
-        </button>
-        <button
-          onClick={() => {
-            updateIndex(activeIndex + 1);
-          }}
-          disabled={!buttonsDisabled ? false : true}
-        >
-          next
-        </button>
-      </div>
+      {!dumb && (
+        <div className="carousel__navigation">
+          <button
+            style={{ color: `${navColor}` }}
+            onClick={() => {
+              updateIndex(activeIndex - 1);
+            }}
+            disabled={!buttonsDisabled ? false : true}
+          >
+            {"<<"}
+          </button>
+          <button
+            style={{ color: `${navColor}` }}
+            onClick={() => {
+              updateIndex(activeIndex + 1);
+            }}
+            disabled={!buttonsDisabled ? false : true}
+          >
+            {">>"}
+          </button>
+        </div>
+      )}
     </div>
   );
 };
