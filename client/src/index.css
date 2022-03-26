@@ -14,7 +14,7 @@ body {
   font-size: 1.1em;
   background-color: var(--bright);
   color: var(--dark);
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 ul,
@@ -32,6 +32,7 @@ ul {
 }
 a {
   text-decoration: none;
+  color: inherit;
 }
 
 button {

@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import { CarouselContextProvider } from "./context/CarouselContext";
 // styles
 import "./App.css";
 // pages & components
@@ -9,12 +11,14 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navigation />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/info" element={<Info />} />
-          <Route path="/admin" element={<Admin />} />
-        </Routes>
+        <CarouselContextProvider>
+          <Navigation />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/info" element={<Info />} />
+            <Route path="/admin" element={<Admin />} />
+          </Routes>
+        </CarouselContextProvider>
       </BrowserRouter>
     </div>
   );

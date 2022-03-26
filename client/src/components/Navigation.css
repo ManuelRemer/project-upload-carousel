@@ -1,0 +1,22 @@
+.nav {
+  position: fixed;
+  width: 300px;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav__inner {
+  transition: all 0.5s ease-in-out;
+}
+
+.nav__inner:hover {
+  font-size: 2.1em;
+}
+
+@media (max-width: 500px) {
+  .nav {
+    width: 100vw;
+  }
+}

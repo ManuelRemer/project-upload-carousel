@@ -1,0 +1,8 @@
+.App {
+  height: 100vh;
+  position: relative;
+  z-index: 0;
+  overflow: scroll;
+  /* padding-top: 60px; */
+  display: flex;
+}
