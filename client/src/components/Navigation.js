@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+// custom stuff
 import { useCarouselContext } from "../hooks/useCarouselContext";
 // styles
 import "./Navigation.css";
 
 const Navigation = () => {
   const [toHome, setToHome] = useState(false);
+  // think about storing toHome in local storage to keep state after reload
   const { navColor, changeNavColor } = useCarouselContext();
 
   return (

@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+// custom stuff
 import { CarouselContextProvider } from "./context/CarouselContext";
 // styles
 import "./App.css";

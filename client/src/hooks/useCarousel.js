@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useCreateStrip } from "./useCreateStrip";
 import { useCarouselContext } from "./useCarouselContext";
 export const useCarousel = (itemsShown, itemsStrip) => {
@@ -13,6 +13,8 @@ export const useCarousel = (itemsShown, itemsStrip) => {
     changeNavColor(newIndex);
     setButtonsDisabled(true);
   };
+
+  console.log({ activeIndex, itemsShown });
 
   // handler
   const handleTransitionEnd = () => {

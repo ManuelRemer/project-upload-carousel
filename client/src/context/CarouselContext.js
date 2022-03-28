@@ -14,10 +14,7 @@ export const CarouselContextProvider = ({ children }) => {
     "white",
   ]);
 
-  console.log(colorStrip);
-
   const [navColor, setNavColor] = useState(colorStrip.current[1]);
-  console.log({ navColor });
 
   const changeNavColor = (i) => {
     setNavColor(colorStrip.current[i]);
