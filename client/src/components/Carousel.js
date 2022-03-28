@@ -1,16 +1,14 @@
-import { useEffect, useState, useRef, cloneElement, useContext } from "react";
+import { cloneElement } from "react";
 import { useCreateStrip } from "../hooks/useCreateStrip";
 // styles
 import "./Carousel.css";
-
-//context
-
+// custom stuff
 import { useCarousel } from "../hooks/useCarousel";
-import { useCarouselContext } from "../hooks/useCarouselContext";
+import { useColorThemeContext } from "../hooks/useColorThemeContext";
 
-const Carousel = ({ children, itemsShown = 1, dumb = false }) => {
-  const carouselStrip = useCreateStrip(1, children);
-  const { navColor } = useCarouselContext();
+const Carousel = ({ children, itemsShown = 1 }) => {
+  const carouselStrip = useCreateStrip(itemsShown, children);
+  const { navColor } = useColorThemeContext();
 
   const {
     transform,
@@ -18,8 +16,7 @@ const Carousel = ({ children, itemsShown = 1, dumb = false }) => {
     handleTransitionEnd,
     activeIndex,
     updateIndex,
-  } = useCarousel(1, carouselStrip);
-  // const {activeIndex, updateIndex } = useCarouselContext();
+  } = useCarousel(itemsShown, carouselStrip);
 
   return (
     <div className="carousel">
@@ -38,7 +35,7 @@ const Carousel = ({ children, itemsShown = 1, dumb = false }) => {
               }
         }
       >
-        {carouselStrip.current.map((child) => {
+        {carouselStrip.map((child) => {
           return cloneElement(child, {
             itemsShown,
             key: Math.random(),
@@ -46,28 +43,26 @@ const Carousel = ({ children, itemsShown = 1, dumb = false }) => {
         })}
       </div>
 
-      {!dumb && (
-        <div className="carousel__navigation">
-          <button
-            style={{ color: `${navColor}` }}
-            onClick={() => {
-              updateIndex(activeIndex - 1);
-            }}
-            disabled={!buttonsDisabled ? false : true}
-          >
-            {"<<"}
-          </button>
-          <button
-            style={{ color: `${navColor}` }}
-            onClick={() => {
-              updateIndex(activeIndex + 1);
-            }}
-            disabled={!buttonsDisabled ? false : true}
-          >
-            {">>"}
-          </button>
-        </div>
-      )}
+      <div className="carousel__navigation">
+        <button
+          style={{ color: `${navColor}` }}
+          onClick={() => {
+            updateIndex(activeIndex - 1);
+          }}
+          disabled={!buttonsDisabled ? false : true}
+        >
+          {"<<"}
+        </button>
+        <button
+          style={{ color: `${navColor}` }}
+          onClick={() => {
+            updateIndex(activeIndex + 1);
+          }}
+          disabled={!buttonsDisabled ? false : true}
+        >
+          {">>"}
+        </button>
+      </div>
     </div>
   );
 };

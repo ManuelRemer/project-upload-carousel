@@ -1,11 +1,15 @@
-import { useState, useEffect, useRef } from "react";
-import { useCreateStrip } from "./useCreateStrip";
-import { useCarouselContext } from "./useCarouselContext";
+import { useState, useEffect } from "react";
+// custom stuff
+import { useColorThemeContext } from "./useColorThemeContext";
+
 export const useCarousel = (itemsShown, itemsStrip) => {
+  // states
   const [activeIndex, setActiveIndex] = useState(itemsShown);
   const [transform, setTransform] = useState(true);
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
-  const { changeNavColor } = useCarouselContext();
+  // custom hooks
+  const { changeNavColor } = useColorThemeContext();
+
   // updater
   const updateIndex = (newIndex) => {
     setTransform(true);
@@ -17,23 +21,20 @@ export const useCarousel = (itemsShown, itemsStrip) => {
   // handler
   const handleTransitionEnd = () => {
     setButtonsDisabled(false);
-    if (
-      activeIndex === itemsStrip.current.length - itemsShown ||
-      activeIndex === 0
-    ) {
+    if (activeIndex === itemsStrip.length - itemsShown || activeIndex === 0) {
       setTransform(false);
     }
   };
 
   // effects
   useEffect(() => {
-    if (!transform && activeIndex === itemsStrip.current.length - itemsShown) {
+    if (!transform && activeIndex === itemsStrip.length - itemsShown) {
       setActiveIndex(itemsShown);
       setButtonsDisabled(false);
       return;
     }
     if (!transform && activeIndex === 0) {
-      setActiveIndex(itemsStrip.current.length - itemsShown * 2);
+      setActiveIndex(itemsStrip.length - itemsShown * 2);
     }
   }, [transform, activeIndex, itemsShown, itemsStrip]);
 
@@ -43,6 +44,5 @@ export const useCarousel = (itemsShown, itemsStrip) => {
     buttonsDisabled,
     handleTransitionEnd,
     updateIndex,
-    useCreateStrip,
   };
 };
