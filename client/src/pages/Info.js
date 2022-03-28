@@ -6,6 +6,10 @@ import "./Info.css";
 const Info = () => {
   const [form, setForm] = useState(false);
 
+  console.log(
+    getComputedStyle(document.documentElement).getPropertyValue("font-size")
+  );
+
   return (
     <div className="info">
       <article className="info__about">
@@ -58,7 +62,7 @@ const Info = () => {
         )}
         <button
           onClick={() => {
-            setForm(true);
+            setForm(!form);
           }}
         >
           AF

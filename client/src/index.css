@@ -11,8 +11,6 @@
 body {
   font-family: Poppins, sans-serif;
   font-size: 1.1em;
-  background-color: var(--bright);
-  color: var(--dark);
   overflow: hidden;
 }
 
