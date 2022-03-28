@@ -4,11 +4,11 @@ import { useCreateStrip } from "../hooks/useCreateStrip";
 import "./Carousel.css";
 // custom stuff
 import { useCarousel } from "../hooks/useCarousel";
-import { useCarouselContext } from "../hooks/useCarouselContext";
+import { useColorThemeContext } from "../hooks/useColorThemeContext";
 
 const Carousel = ({ children, itemsShown = 1 }) => {
   const carouselStrip = useCreateStrip(itemsShown, children);
-  const { navColor } = useCarouselContext();
+  const { navColor } = useColorThemeContext();
 
   const {
     transform,
@@ -35,7 +35,7 @@ const Carousel = ({ children, itemsShown = 1 }) => {
               }
         }
       >
-        {carouselStrip.current.map((child) => {
+        {carouselStrip.map((child) => {
           return cloneElement(child, {
             itemsShown,
             key: Math.random(),

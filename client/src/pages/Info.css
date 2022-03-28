@@ -1,7 +1,7 @@
 .info {
   display: flex;
   flex-direction: column;
-
+  width: 100%;
   padding: 0 2.1em;
   gap: 2em;
   color: hotpink;
@@ -25,7 +25,9 @@
 .info h2 {
   font-size: 16px;
 }
-/* 
-.info__about {
-  margin-top: 100px;
-} */
+
+.info__admin {
+  align-self: flex-end;
+  display: flex;
+  align-items: center;
+}

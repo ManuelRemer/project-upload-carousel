@@ -1,4 +1,4 @@
-import Navigation from "./Navigation";
+import Navbar from "./Navbar";
 import Carousel, { CarouselItem } from "../components/Carousel";
 
-export { Navigation, Carousel, CarouselItem };
+export { Navbar, Carousel, CarouselItem };

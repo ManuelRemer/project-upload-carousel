@@ -1,20 +1,20 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 // custom stuff
-import { useCarouselContext } from "../hooks/useCarouselContext";
+import { useColorThemeContext } from "../hooks/useColorThemeContext";
 // styles
-import "./Navigation.css";
+import "./Navbar.css";
 
 const Navigation = () => {
   const [toHome, setToHome] = useState(false);
   // think about storing toHome in local storage to keep state after reload
-  const { navColor, changeNavColor } = useCarouselContext();
+  const { navColor, changeNavColor } = useColorThemeContext();
 
   return (
     <div className="nav">
       <h1
         className="nav__inner"
-        style={!toHome ? { color: `${navColor}` } : { color: `hotpink` }}
+        style={!toHome ? { color: `${navColor}` } : { color: `hotpink` }} // receives a variable whose value is specified by the user
         onClick={() => {
           setToHome(!toHome);
           toHome && changeNavColor(1);
