@@ -26,11 +26,15 @@ const Carousel = ({ children, itemsShown = 1 }) => {
         style={
           transform
             ? {
-                transform: `translateX(-${(activeIndex * 100) / itemsShown}%`,
-                transition: "transform 0.3s",
+                transform: `translate3d(-${
+                  (activeIndex * 100) / itemsShown
+                }%,0,0`,
+                transition: "transform 0.3s ease-in-out 0.1s",
               }
             : {
-                transform: `translateX(-${(activeIndex * 100) / itemsShown}%`,
+                transform: `translate3d(-${
+                  (activeIndex * 100) / itemsShown
+                }%,0,0`,
                 transition: "none",
               }
         }
