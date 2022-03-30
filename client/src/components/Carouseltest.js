@@ -8,14 +8,14 @@ import { useColorThemeContext } from "../hooks/useColorThemeContext";
 
 const Carousel = ({ children, itemsShown = 1 }) => {
   const carouselStrip = useCreateStrip(itemsShown, children);
-  const { navColor, changeNavColor } = useColorThemeContext();
+  const { navColor } = useColorThemeContext();
 
   const {
     transform,
-    activeIndex,
     buttonsDisabled,
     handleTransitionEnd,
-    dispatch,
+    activeIndex,
+    updateIndex,
   } = useCarousel(itemsShown, carouselStrip);
 
   return (
@@ -47,8 +47,7 @@ const Carousel = ({ children, itemsShown = 1 }) => {
         <button
           style={{ color: `${navColor}` }}
           onClick={() => {
-            dispatch({ type: "UPDATE_INDEX", payload: activeIndex - 1 });
-            changeNavColor(activeIndex - 1);
+            updateIndex(activeIndex - 1);
           }}
           disabled={!buttonsDisabled ? false : true}
         >
@@ -57,8 +56,7 @@ const Carousel = ({ children, itemsShown = 1 }) => {
         <button
           style={{ color: `${navColor}` }}
           onClick={() => {
-            dispatch({ type: "UPDATE_INDEX", payload: activeIndex + 1 });
-            changeNavColor(activeIndex + 1);
+            updateIndex(activeIndex + 1);
           }}
           disabled={!buttonsDisabled ? false : true}
         >
