@@ -3,6 +3,7 @@
 *,
 ::before,
 ::after {
+  -webkit-box-sizing: content-box;
   box-sizing: content-box;
   margin: 0;
   padding: 0;
@@ -41,5 +42,7 @@ button {
   padding: 0.5em;
   font-size: 1.2em;
   font-weight: bold;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
   width: fit-content;
 }
