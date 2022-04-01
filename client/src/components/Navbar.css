@@ -15,12 +15,15 @@
 
 .nav__inner {
   color: var(--nav);
-  -webkit-transition: color 1s ease-in-out, font-size 0.2s ease-in-out 0.1s;
-  transition: color 1s ease-in-out, font-size 0.2s ease-in-out 0.1s;
+  text-decoration: none;
+  -webkit-transition: color 1s ease-in-out,
+    text-decoration 0.2s ease-in-out 0.1s;
+  transition: color 1s ease-in-out, text-decoration 0.2s ease-in-out 0.1s;
 }
 
 .nav__inner:hover {
-  font-size: 2.1em;
+  /* font-size: 2.1em; */
+  text-decoration: underline;
 }
 
 @media (max-width: 500px) {
