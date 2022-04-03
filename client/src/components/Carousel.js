@@ -8,7 +8,7 @@ import { useColorThemeContext } from "../hooks/useColorThemeContext";
 
 const Carousel = ({ children, itemsShown = 1 }) => {
   const carouselStrip = useCreateStrip(itemsShown, children);
-  const { navColor, changeNavColor } = useColorThemeContext();
+  const { changeNavColor } = useColorThemeContext();
 
   const {
     transform,
@@ -18,6 +18,8 @@ const Carousel = ({ children, itemsShown = 1 }) => {
     dispatch,
   } = useCarousel(itemsShown, carouselStrip);
 
+  console.log(buttonsDisabled);
+
   return (
     <div className="carousel">
       <div
@@ -26,11 +28,11 @@ const Carousel = ({ children, itemsShown = 1 }) => {
         style={
           transform
             ? {
-                transform: `translateX(-${(activeIndex * 100) / itemsShown}%`,
-                transition: "transform 0.3s ease-in-out 0.1s",
+                transform: `translateX(-${(activeIndex * 100) / itemsShown}%)`,
+                transition: "transform 0.7s ease-in-out 0.1s",
               }
             : {
-                transform: `translateX(-${(activeIndex * 100) / itemsShown}%`,
+                transform: `translateX(-${(activeIndex * 100) / itemsShown}%)`,
                 transition: "none",
               }
         }
@@ -45,7 +47,6 @@ const Carousel = ({ children, itemsShown = 1 }) => {
 
       <div className="carousel__navigation">
         <button
-          style={{ color: `${navColor}` }}
           onClick={() => {
             dispatch({ type: "UPDATE_INDEX", payload: activeIndex - 1 });
             changeNavColor(activeIndex - 1);
@@ -55,7 +56,6 @@ const Carousel = ({ children, itemsShown = 1 }) => {
           {"<<"}
         </button>
         <button
-          style={{ color: `${navColor}` }}
           onClick={() => {
             dispatch({ type: "UPDATE_INDEX", payload: activeIndex + 1 });
             changeNavColor(activeIndex + 1);
