@@ -12,7 +12,6 @@
 
 .carousel__item {
   position: relative;
-
   height: 100vh;
   width: 100vw;
   display: -webkit-inline-box;
@@ -44,6 +43,13 @@
   -ms-flex-pack: justify;
   justify-content: space-between;
   position: absolute;
-
   top: 50%;
+  /* color must be another var with value: colorStrip[1] */
+  color: lightgreen;
+}
+
+.carousel__navigation button {
+  color: var(--nav);
+  -webkit-transition: color 1s linear;
+  transition: color 1s linear;
 }

@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // styles
 import "./Info.css";
 
 const Info = () => {
   const [form, setForm] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="info">
@@ -59,6 +60,7 @@ const Info = () => {
         <button
           onClick={() => {
             setForm(!form);
+            navigate("/admin");
           }}
         >
           AF

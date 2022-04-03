@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 // custom stuff
 import { useColorThemeContext } from "../hooks/useColorThemeContext";
@@ -11,14 +11,13 @@ const Navigation = () => {
 
   useEffect(() => {
     location.pathname === "/"
-      ? dispatch({ type: "CHANGE_COLOR_CAROUSEL", payload: "lightgreen" })
+      ? // hardcoded payloads must be converted to dynamic values
+        dispatch({ type: "CHANGE_COLOR_CAROUSEL", payload: "lightgreen" })
       : dispatch({ type: "CHANGE_COLOR_INFO", payload: "hotpink" });
   }, [dispatch, location]);
 
   useEffect(() => {
-    const element = document.querySelector("h1");
     document.documentElement.style.setProperty("--nav", navColor);
-    element.style.color = navColor;
   }, [navColor]);
 
   const NavbarContent = () => {

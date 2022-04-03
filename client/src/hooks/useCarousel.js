@@ -6,13 +6,13 @@ const carouselReducer = (state, action) => {
       return {
         ...state,
         activeIndex: action.payload,
-        setButtonsDisabled: true,
+        buttonsDisabled: true,
         transform: true,
       };
     case "TRANSITION-END_REG":
-      return { ...state, setButtonsDisabled: false };
+      return { ...state, buttonsDisabled: false };
     case "TRANSITION-END_INFINITE":
-      return { ...state, setButtonsDisabled: false, transform: false };
+      return { ...state, buttonsDisabled: false, transform: false };
     case "JUMP_TO_START":
       return { ...state, activeIndex: action.payload, buttonsDisabled: false };
     case "JUMP_TO_END":

@@ -1,0 +1,10 @@
+.signup {
+  width: 400px;
+  margin: auto 2.1em 10px;
+}
+
+@media (max-width: 500px) {
+  .nav {
+    width: 100%;
+  }
+}

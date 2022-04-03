@@ -1,5 +1,4 @@
 import { createContext, useReducer } from "react";
-
 // custom Stuff
 import { useCreateStrip } from "../hooks/useCreateStrip";
 
@@ -10,6 +9,7 @@ const ColorThemeReducer = (state, action) => {
     case "CHANGE_COLOR_CAROUSEL":
       return { ...state, navColor: action.payload, linkToHome: false };
     case "CHANGE_COLOR_INFO":
+      // hard coded navColor value must be converted to dynamic value
       return { ...state, navColor: "hotpink", linkToHome: true };
     default:
       return state;
@@ -18,6 +18,7 @@ const ColorThemeReducer = (state, action) => {
 
 export const ColorThemeContextProvider = ({ children }) => {
   const colorStrip = useCreateStrip(1, [
+    // colors will be fetched from server
     "lightgreen",
     "hotpink",
     "yellow",

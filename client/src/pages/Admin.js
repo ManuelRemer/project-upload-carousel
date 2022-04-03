@@ -7,9 +7,11 @@ const Admin = () => {
   // const [admin, setAdmin] = useState(false)
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [color, setColor] = useState("");
+  console.log(color);
   const inputFields = [
     {
-      label: "text",
+      label: "site name",
       type: "text",
       value: name,
       handler: (i) => setName(i),
@@ -31,7 +33,7 @@ const Admin = () => {
   };
 
   return (
-    <div className="login">
+    <div className="signup">
       <form onSubmit={handleSubmit}>
         <div>
           {inputFields.map((field) => (
@@ -48,6 +50,21 @@ const Admin = () => {
           // isPending={isPending} error={error}
           label="Login"
         /> */}
+        <button type="submit">It's mine!</button>
+      </form>
+      <form>
+        <RegInput
+          label="color"
+          type="color"
+          value={color}
+          handleInput={(e) => setColor(e)}
+        />
+        <div class="form-row">
+          <label for="image" class="form-label">
+            Image
+          </label>
+          <input type="file" id="image" accept="image/*"></input>
+        </div>
       </form>
     </div>
   );
