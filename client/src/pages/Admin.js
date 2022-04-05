@@ -1,14 +1,33 @@
+import { useState, useEffect } from "react";
 // styles
-import { useState } from "react";
 import "./Admin.css";
+// components
 import { RegInput } from "../components";
+// custom stuff
+import { useFetch } from "../hooks/useFetch";
+import { useAdminContext } from "../hooks/useAdminContext";
 
 const Admin = () => {
-  // const [admin, setAdmin] = useState(false)
+  // states
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [color, setColor] = useState("");
-  console.log(color);
+  const [image, setImage] = useState("");
+  const [imagesToUpload, setImagesToUpload] = useState([]);
+
+  // useCustomHooks + useContexts
+  const { data, error, isPending, postData } = useFetch("/api/v1/admin/create");
+  const { adminLogged, admin, dispatch } = useAdminContext();
+
+  console.log(admin);
+  // clean up when component unmounts
+  useEffect(() => {
+    return () => {
+      dispatch({ type: "LOGOUT" });
+      localStorage.removeItem("userData");
+    };
+  }, [dispatch]);
+
   const inputFields = [
     {
       label: "site name",
@@ -26,46 +45,67 @@ const Admin = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // postData({
-    //   email: email,
-    //   password: password,
-    // });
+    postData({
+      name,
+      password,
+    });
+    dispatch({ type: "LOGIN" });
+    localStorage.setItem("userData", JSON.stringify(data));
   };
 
   return (
     <div className="signup">
-      <form onSubmit={handleSubmit}>
-        <div>
-          {inputFields.map((field) => (
-            <RegInput
-              label={field.label}
-              type={field.type}
-              value={field.value}
-              handleInput={field.handler}
-              key={field.label}
-            />
-          ))}
-        </div>
-        {/* <SubmitButton
-          // isPending={isPending} error={error}
-          label="Login"
-        /> */}
-        <button type="submit">It's mine!</button>
-      </form>
-      <form>
-        <RegInput
-          label="color"
-          type="color"
-          value={color}
-          handleInput={(e) => setColor(e)}
-        />
-        <div class="form-row">
-          <label for="image" class="form-label">
-            Image
-          </label>
-          <input type="file" id="image" accept="image/*"></input>
-        </div>
-      </form>
+      {!admin && (
+        <form onSubmit={handleSubmit}>
+          <div>
+            {inputFields.map((field) => (
+              <RegInput
+                label={field.label}
+                type={field.type}
+                value={field.value}
+                handleInput={field.handler}
+                key={field.label}
+              />
+            ))}
+          </div>
+          <button type="submit">It's mine!</button>
+        </form>
+      )}
+      {adminLogged && (
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            setImagesToUpload([...imagesToUpload, { color, image }]);
+            setColor("");
+            setImage("");
+          }}
+        >
+          <RegInput
+            label="color"
+            type="color"
+            value={color}
+            handleInput={(e) => setColor(e)}
+            required
+          />
+          <RegInput
+            label="image"
+            type="file"
+            value={image}
+            handleInput={(e) => {
+              const selected = e;
+              setImage(selected);
+            }}
+            accept="image/*"
+            required
+          />
+          <button type="submit">Add image</button>
+        </form>
+      )}
+      {/* <div>
+        {imagesToUpload.map((image) => (
+          <img src={image.image} alt="" />
+        ))}
+      </div> */}
     </div>
   );
 };

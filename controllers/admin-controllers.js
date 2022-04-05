@@ -8,22 +8,29 @@ const { BadRequestError } = require("../errors");
 // checking mw
 const checkIfAdmin = async (req, res, next) => {
   const admin = await Admin.find({});
+  let result;
+  if (admin.length === 0) {
+    result = false;
+  } else {
+    result = true;
+  }
+
+  res.status(StatusCodes.OK).json(result);
+};
+
+const checkIfNoAdmin = async (req, res, next) => {
+  const admin = await Admin.find({});
   if (admin.length === 0) {
     next();
   } else {
-    res.status(StatusCodes.BAD_REQUEST).json({ msg: "no more admins" });
+    res.status(StatusCodes.BAD_REQUEST).json({ msg: "not more admins" });
   }
 };
 
 const validateEmailPassword = async (req, res, next) => {
-  const { email, password } = req.body;
-  if (!password || !email) {
-    throw new BadRequestError("Provide email and password");
-  }
-  const admin = await Admin.findOne(req.body.name);
-  if (!admin) {
-    throw new BadRequestError("Invalid Credentials");
-  }
+  const { password } = req.body;
+  const admin = await Admin.findOne({ name: "anne" });
+  console.log(admin[0]);
   const passwordIsCorrect = await admin.comparePassword(password);
   if (!passwordIsCorrect) {
     throw new BadRequestError("Incorrect password");
@@ -52,6 +59,7 @@ const loginAdmin = async (req, res) => {
 };
 
 module.exports = {
+  checkIfNoAdmin,
   checkIfAdmin,
   createAdmin,
   deleteAdmin,

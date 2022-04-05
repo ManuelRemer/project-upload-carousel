@@ -10,15 +10,15 @@ const AdminSchema = new mongoose.Schema({
     required: [true, "Please provide a name"],
   },
 
-  email: {
-    type: String,
-    unique: [true, "an account with this email already exists"],
-    required: [true, "Please provide an email address"],
-    match: [
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      "Please provide valid email",
-    ],
-  },
+  // email: {
+  //   type: String,
+  //   unique: [true, "an account with this email already exists"],
+  //   required: [true, "Please provide an email address"],
+  //   match: [
+  //     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+  //     "Please provide valid email",
+  //   ],
+  // },
 
   password: {
     type: String,

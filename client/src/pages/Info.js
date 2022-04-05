@@ -1,27 +1,37 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+// custom stuff
+import { useFetch } from "../hooks/useFetch";
+import { useAdminContext } from "../hooks/useAdminContext";
 // styles
 import "./Info.css";
 
 const Info = () => {
-  const [form, setForm] = useState(false);
   const navigate = useNavigate();
+  // states
+  const [form, setForm] = useState(false);
+  const [password, setPassword] = useState("");
+  // custom stuff
+  const { data, error, isPending, postData } = useFetch("/api/v1/admin");
+  const { dispatch } = useAdminContext();
+
+  useEffect(() => {
+    if (data) {
+      localStorage.setItem("userData", JSON.stringify(data));
+      navigate("/admin");
+    }
+  }, [data, navigate]);
 
   return (
     <div className="info">
       <article className="info__about">
         Hi! I am a freelance graphic designer with a passion for editorial
-        design. <br />
-        In my many years working for various publishing houses, I always loved
-        <br />
-        content-driven visual concepts. I believe in the power of flashy yet
-        smart <br />
-        designs but always with precision and high quality. While Im trying to
-        take myself <br />
-        not too serious I take the needs of my clients very seriously. I am
-        always
-        <br /> interested in collaborations and freelance opportunities. Just
-        say hi!
+        design. In my many years working for various publishing houses, I always
+        loved content-driven visual concepts. I believe in the power of flashy
+        yet smart designs but always with precision and high quality. While Im
+        trying to take myself not too serious I take the needs of my clients
+        very seriously. I am always interested in collaborations and freelance
+        opportunities. Just say hi!
       </article>
 
       <ul className="info__contact">
@@ -43,24 +53,36 @@ const Info = () => {
 
       <article>
         <h2>I've been happy working with</h2>
-        <p>die Zeit, ZeitLeo, Zeit Campus, Emotion, WALDEN, BEEFI, Neon,</p>
-        <p>Working Women, GEOLino, Finanzielle, Girlpower, Zeit Stiftung,</p>
-        <p>Essen&Trinken, HoheLuft, Cornelia Poletto Magazin</p>
+        <p>
+          die Zeit, ZeitLeo, Zeit Campus, Emotion, WALDEN, BEEFI, Neon,Working
+          Women, GEOLino, Finanzielle, Girlpower, Zeit Stiftung, Essen&Trinken,
+          HoheLuft, Cornelia Poletto Magazin
+        </p>
       </article>
+
       <div className="info__admin">
         {form && (
           <form
-            onSubmit={() => {
+            onSubmit={(e) => {
+              e.preventDefault();
+              postData({ password });
+              dispatch({ type: "LOGIN" });
               setForm(false);
             }}
           >
-            <input type="password"></input>
+            <input
+              type="password"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            ></input>
           </form>
         )}
+        {error && !form && <p>{error}</p>}
+        {isPending && !form && <p>loading...</p>}
         <button
           onClick={() => {
             setForm(!form);
-            navigate("/admin");
           }}
         >
           AF
