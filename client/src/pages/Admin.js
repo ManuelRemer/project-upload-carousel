@@ -1,27 +1,25 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 // styles
 import "./Admin.css";
-// components
-import { RegInput } from "../components";
+
 // custom stuff
 
 import { useAdminContext } from "../hooks/useAdminContext";
 import RegisterForm from "../components/RegisterForm";
+import UploadForm from "../components/UploadForm";
 
-const Admin = () => {
-  // states
-
-  const [color, setColor] = useState("");
-  const [image, setImage] = useState("");
-  const [imagesToUpload, setImagesToUpload] = useState([]);
-
+const Admin = ({ handleAdmin }) => {
   // useCustomHooks + useContexts
+  const { dispatch } = useAdminContext();
 
-  const { adminLogged, admin, dispatch } = useAdminContext();
-
-  console.log(admin);
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem("userData")))
+      dispatch({ type: "LOGIN" });
+  }, [dispatch]);
   // clean up when component unmounts
   useEffect(() => {
+    // if (JSON.parse(localStorage.getItem("userData")))
+    //   dispatch({ type: "LOGIN" });
     return () => {
       dispatch({ type: "LOGOUT" });
       localStorage.removeItem("userData");
@@ -30,37 +28,8 @@ const Admin = () => {
 
   return (
     <div className="signup">
-      {!admin && <RegisterForm />}
-      {adminLogged && (
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            setImagesToUpload([...imagesToUpload, { color, image }]);
-            setColor("");
-            setImage("");
-          }}
-        >
-          <RegInput
-            label="color"
-            type="color"
-            value={color}
-            handleInput={(e) => setColor(e)}
-            required
-          />
-          <RegInput
-            label="image"
-            type="file"
-            value={image}
-            handleInput={(e) => {
-              const selected = e;
-              setImage(selected);
-            }}
-            accept="image/*"
-            required
-          />
-          <button type="submit">Add image</button>
-        </form>
-      )}
+      <RegisterForm handleAdmin={handleAdmin} />
+      <UploadForm />
       {/* <div>
         {imagesToUpload.map((image) => (
           <img src={image.image} alt="" />

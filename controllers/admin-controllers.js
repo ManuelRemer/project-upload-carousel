@@ -14,7 +14,7 @@ const checkIfAdmin = async (req, res, next) => {
   } else {
     result = true;
   }
-
+  console.log({ result });
   res.status(StatusCodes.OK).json(result);
 };
 
@@ -29,6 +29,7 @@ const checkIfNoAdmin = async (req, res, next) => {
 
 const validateEmailPassword = async (req, res, next) => {
   const { password } = req.body;
+  console.log("inside validate");
   const admin = await Admin.findOne({ name: "anne" });
   console.log(admin[0]);
   const passwordIsCorrect = await admin.comparePassword(password);

@@ -3,11 +3,12 @@ import { useFetch } from "../hooks/useFetch";
 import { useAdminContext } from "../hooks/useAdminContext";
 import { RegInput } from "../components";
 
-const RegisterForm = () => {
+const RegisterForm = ({ handleAdmin }) => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const { data, error, isPending, postData } = useFetch("/api/v1/admin/create");
   const { dispatch } = useAdminContext();
+
   const inputFields = [
     {
       label: "name",
@@ -25,12 +26,15 @@ const RegisterForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     postData({
       name,
       password,
     });
     dispatch({ type: "LOGIN" });
     localStorage.setItem("userData", JSON.stringify(data));
+
+    // handleAdmin();
   };
 
   return (
@@ -47,9 +51,8 @@ const RegisterForm = () => {
             />
           ))}
         </div>
-        {!isPending ? (
-          <button type="submit">It's mine!</button>
-        ) : (
+        {!isPending && <button type="submit">It's mine!</button>}
+        {isPending && (
           <button type="submit" disabled>
             loading...
           </button>

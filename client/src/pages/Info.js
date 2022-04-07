@@ -15,6 +15,8 @@ const Info = () => {
   const { data, error, isPending, postData } = useFetch("/api/v1/admin");
   const { dispatch } = useAdminContext();
 
+  console.log({ data });
+
   useEffect(() => {
     if (data) {
       localStorage.setItem("userData", JSON.stringify(data));
@@ -65,6 +67,7 @@ const Info = () => {
           <form
             onSubmit={(e) => {
               e.preventDefault();
+              console.log("inside submit");
               postData({ password });
               dispatch({ type: "LOGIN" });
               setForm(false);
