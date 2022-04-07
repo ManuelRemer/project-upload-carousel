@@ -3,7 +3,7 @@ import { useFetch } from "../hooks/useFetch";
 import { useAdminContext } from "../hooks/useAdminContext";
 import { RegInput } from "../components";
 
-const RegisterForm = ({ handleAdmin }) => {
+const RegisterForm = ({ handleAdminExists }) => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const { data, error, isPending, postData } = useFetch("/api/v1/admin/create");
@@ -33,8 +33,7 @@ const RegisterForm = ({ handleAdmin }) => {
     });
     dispatch({ type: "LOGIN" });
     localStorage.setItem("userData", JSON.stringify(data));
-
-    // handleAdmin();
+    handleAdminExists();
   };
 
   return (

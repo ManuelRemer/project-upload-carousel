@@ -1,14 +1,13 @@
 import { useEffect } from "react";
 // styles
 import "./Admin.css";
-
 // custom stuff
-
 import { useAdminContext } from "../hooks/useAdminContext";
+// components
 import RegisterForm from "../components/RegisterForm";
 import UploadForm from "../components/UploadForm";
 
-const Admin = ({ handleAdmin }) => {
+const Admin = ({ handleAdminExists, adminExists }) => {
   // useCustomHooks + useContexts
   const { dispatch } = useAdminContext();
 
@@ -16,10 +15,9 @@ const Admin = ({ handleAdmin }) => {
     if (JSON.parse(localStorage.getItem("userData")))
       dispatch({ type: "LOGIN" });
   }, [dispatch]);
+
   // clean up when component unmounts
   useEffect(() => {
-    // if (JSON.parse(localStorage.getItem("userData")))
-    //   dispatch({ type: "LOGIN" });
     return () => {
       dispatch({ type: "LOGOUT" });
       localStorage.removeItem("userData");
@@ -28,8 +26,8 @@ const Admin = ({ handleAdmin }) => {
 
   return (
     <div className="signup">
-      <RegisterForm handleAdmin={handleAdmin} />
-      <UploadForm />
+      {!adminExists && <RegisterForm handleAdminExists={handleAdminExists} />}
+      {adminExists && <UploadForm />}
       {/* <div>
         {imagesToUpload.map((image) => (
           <img src={image.image} alt="" />

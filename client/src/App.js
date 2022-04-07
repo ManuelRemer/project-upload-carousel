@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [isReady, setIsReady] = useState(false);
-  // const [admin, setAdmin] = useState(false);
+  const [adminExists, setAdminExists] = useState(false);
 
   const {
     data: admin,
@@ -18,20 +18,15 @@ function App() {
     error,
   } = useFetch("/api/v1/admin/check", "GET");
 
-  // const checkAdmin = async () => {
-  //   const res = await fetch("/api/v1/admin/check");
-  //   const data = await res.json();
-  //   setAdmin(data);
-  //   setIsReady(true);
-  //   return data;
-  // };
-
-  const handleAdmin = () => {};
-
-  // checkAdmin();
+  const handleAdminExists = () => {
+    setAdminExists(true);
+  };
 
   useEffect(() => {
-    admin !== null && setIsReady(true);
+    if (admin !== null) {
+      setIsReady(true);
+      setAdminExists(admin);
+    }
   }, [admin]);
 
   return (
@@ -42,12 +37,14 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={admin ? <Home /> : <Navigate to="/admin" />}
+              element={adminExists ? <Home /> : <Navigate to="/admin" />}
             />
             <Route path="/info" element={<Info />} />
             <Route
               path="/admin"
-              element={<Admin handleAdmin={handleAdmin} />}
+              element={
+                <Admin handleAdminExists={handleAdminExists} adminExists />
+              }
             />
           </Routes>
         </BrowserRouter>

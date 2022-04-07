@@ -15,8 +15,6 @@ const Info = () => {
   const { data, error, isPending, postData } = useFetch("/api/v1/admin");
   const { dispatch } = useAdminContext();
 
-  console.log({ data });
-
   useEffect(() => {
     if (data) {
       localStorage.setItem("userData", JSON.stringify(data));
