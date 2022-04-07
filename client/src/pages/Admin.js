@@ -1,71 +1,38 @@
+import { useEffect } from "react";
 // styles
-import { useState } from "react";
 import "./Admin.css";
-import { RegInput } from "../components";
+// custom stuff
+import { useAdminContext } from "../hooks/useAdminContext";
+// components
+import RegisterForm from "../components/RegisterForm";
+import UploadForm from "../components/UploadForm";
 
-const Admin = () => {
-  // const [admin, setAdmin] = useState(false)
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-  const [color, setColor] = useState("");
-  console.log(color);
-  const inputFields = [
-    {
-      label: "site name",
-      type: "text",
-      value: name,
-      handler: (i) => setName(i),
-    },
-    {
-      label: "password",
-      type: "password",
-      value: password,
-      handler: (i) => setPassword(i),
-    },
-  ];
+const Admin = ({ handleAdminExists, adminExists }) => {
+  // useCustomHooks + useContexts
+  const { dispatch } = useAdminContext();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // postData({
-    //   email: email,
-    //   password: password,
-    // });
-  };
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem("userData")))
+      dispatch({ type: "LOGIN" });
+  }, [dispatch]);
+
+  // clean up when component unmounts
+  useEffect(() => {
+    return () => {
+      dispatch({ type: "LOGOUT" });
+      localStorage.removeItem("userData");
+    };
+  }, [dispatch]);
 
   return (
     <div className="signup">
-      <form onSubmit={handleSubmit}>
-        <div>
-          {inputFields.map((field) => (
-            <RegInput
-              label={field.label}
-              type={field.type}
-              value={field.value}
-              handleInput={field.handler}
-              key={field.label}
-            />
-          ))}
-        </div>
-        {/* <SubmitButton
-          // isPending={isPending} error={error}
-          label="Login"
-        /> */}
-        <button type="submit">It's mine!</button>
-      </form>
-      <form>
-        <RegInput
-          label="color"
-          type="color"
-          value={color}
-          handleInput={(e) => setColor(e)}
-        />
-        <div class="form-row">
-          <label for="image" class="form-label">
-            Image
-          </label>
-          <input type="file" id="image" accept="image/*"></input>
-        </div>
-      </form>
+      {!adminExists && <RegisterForm handleAdminExists={handleAdminExists} />}
+      {adminExists && <UploadForm />}
+      {/* <div>
+        {imagesToUpload.map((image) => (
+          <img src={image.image} alt="" />
+        ))}
+      </div> */}
     </div>
   );
 };

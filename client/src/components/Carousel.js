@@ -18,8 +18,6 @@ const Carousel = ({ children, itemsShown = 1 }) => {
     dispatch,
   } = useCarousel(itemsShown, carouselStrip);
 
-  console.log(buttonsDisabled);
-
   return (
     <div className="carousel">
       <div

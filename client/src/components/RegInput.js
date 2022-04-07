@@ -1,6 +1,6 @@
 import "./RegInput.css";
 
-const RegInput = ({ label, type, value, handleInput }) => {
+const RegInput = ({ label, type, value, handleInput, accept }) => {
   return (
     <div>
       <label>
@@ -12,6 +12,7 @@ const RegInput = ({ label, type, value, handleInput }) => {
           onChange={(e) => {
             handleInput(e.target.value);
           }}
+          accept={accept}
         />
       </label>
     </div>
