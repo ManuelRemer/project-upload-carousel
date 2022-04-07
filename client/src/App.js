@@ -39,7 +39,10 @@ function App() {
               path="/"
               element={adminExists ? <Home /> : <Navigate to="/admin" />}
             />
-            <Route path="/info" element={<Info />} />
+            <Route
+              path="/info"
+              element={adminExists ? <Info /> : <Navigate to="/admin" />}
+            />
             <Route
               path="/admin"
               element={

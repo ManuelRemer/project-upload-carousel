@@ -26,7 +26,6 @@ const RegisterForm = ({ handleAdminExists }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     postData({
       name,
       password,
