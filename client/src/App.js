@@ -12,11 +12,7 @@ function App() {
   const [isReady, setIsReady] = useState(false);
   const [adminExists, setAdminExists] = useState(false);
 
-  const {
-    data: admin,
-    isPending,
-    error,
-  } = useFetch("/api/v1/admin/check", "GET");
+  const { data: admin } = useFetch("/api/v1/admin/check", "GET");
 
   const handleAdminExists = () => {
     setAdminExists(true);
